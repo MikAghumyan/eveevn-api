@@ -1,0 +1,25 @@
+{
+  "name": "eveevn",
+  "version": "1.0.0",
+  "description": "Yerevan Events Platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./backend/index.js",
+    "server": "nodemon ./backend/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikAghumyan/eveevn.git"
+  },
+  "author": "Mikayel Aghumyan",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/MikAghumyan/eveevn/issues"
+  },
+  "homepage": "https://github.com/MikAghumyan/eveevn#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
