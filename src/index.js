@@ -11,7 +11,7 @@ try {
   const MONGO_URI = process.env.MONGODB_URI;
   if (!MONGO_URI) throw new Error("NOT MONGO URI PROVIDED");
   await mongoose.connect(MONGO_URI);
-  console.log("connected to db");
+  console.log("Connected to DB");
 } catch (error) {
   console.log(error);
 }
