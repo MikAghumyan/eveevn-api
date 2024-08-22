@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import LocationSchema from "./Location";
+import { LocationSchema } from "./Location.js";
 
 const EventSchema = new Schema({
   name: { type: String, required: true },
@@ -15,7 +15,7 @@ const EventSchema = new Schema({
       message: "Unknown Acessability Type",
     },
   },
-  location: { type: LocationSchema, required: true },
+  location: LocationSchema,
   interested: Number,
   going: Number,
   requirements: [String],

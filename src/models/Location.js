@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const LocationSchema = new Schema({
+export const LocationSchema = new Schema({
   name: String,
   location: {
     type: {
