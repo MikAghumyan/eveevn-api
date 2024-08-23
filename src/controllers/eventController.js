@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 
 import Event from "./../models/Event.js";
-import e from "express";
 
 export const createEvent = asyncHandler(async (req, res) => {
   try {

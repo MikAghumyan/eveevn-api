@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import EventRoutes from "./routes/EventRoutes.js";
+import AuthRoutes from "./routes/AuthRoutes.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/events", EventRoutes);
+app.use("/api/auth", AuthRoutes);
 
 app.listen(PORT, () => {
   console.log(`App listenting on port ${PORT}`);
