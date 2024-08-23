@@ -8,7 +8,7 @@ const EventSchema = new Schema({
   dateCreated: { type: Date, default: new Date() },
   dateScheduled: { type: Date, required: true },
   description: String,
-  acessability: {
+  accessability: {
     type: String,
     enum: {
       values: ["PUBLIC", "CLOSED"],
@@ -16,8 +16,8 @@ const EventSchema = new Schema({
     },
   },
   location: LocationSchema,
-  interested: Number,
-  going: Number,
+  interested: { type: Number, default: 0, min: 0 },
+  going: { type: Number, default: 0, min: 0 },
   requirements: [String],
 });
 

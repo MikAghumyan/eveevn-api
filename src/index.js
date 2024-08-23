@@ -18,6 +18,9 @@ try {
   console.log(error);
 }
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/events", EventRoutes);
 
 app.listen(PORT, () => {
