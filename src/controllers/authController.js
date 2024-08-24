@@ -10,7 +10,7 @@ export const createUser = asyncHandler(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password: hashedPassword, displayName });
     await user.save();
-    const token = jwt.sign({ userId: user._id }, "your-secret-key", {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     res.status(201).json({ message: "User registered successfully", token });
@@ -31,7 +31,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     if (!passwordMatch)
       return res.status(401).json({ error: "Authentication failed" });
 
-    const token = jwt.sign({ userId: user._id }, "your-secret-key", {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
