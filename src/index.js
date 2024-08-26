@@ -5,6 +5,7 @@ dotenv.config();
 
 import EventRoutes from "./routes/EventRoutes.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
+import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/events", EventRoutes);
 app.use("/api/auth", AuthRoutes);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`App listenting on port ${PORT}`);

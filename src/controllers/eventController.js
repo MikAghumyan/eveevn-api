@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 
 import Event from "./../models/Event.js";
 
-export const createEvent = asyncHandler(async (req, res) => {
+export const createEvent = asyncHandler(async (req, res, next) => {
   try {
     const {
       name,
@@ -32,12 +32,12 @@ export const createEvent = asyncHandler(async (req, res) => {
     });
 
     if (event) {
-      res.status(201).json({
-        _id: event.id,
-      });
+      res.status(201).json(event);
     } else {
       res.status(400);
       throw new Error("Invalid Event Data");
     }
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
