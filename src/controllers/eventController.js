@@ -26,7 +26,7 @@ export const createEvent = asyncHandler(async (req, res, next) => {
       accessability,
       location: {
         name: location.name,
-        location: { type: "Point", coordinates: location.coordinates },
+        geoLocation: { type: "Point", coordinates: location.coordinates },
       },
       requirements,
     });

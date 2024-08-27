@@ -1,18 +1,21 @@
 import mongoose, { Schema } from "mongoose";
 
-export const LocationSchema = new Schema({
-  name: String,
-  location: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      required: true,
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
+const PointSchema = new Schema({
+  type: {
+    type: String,
+    enum: ["Point"],
+    default: "Point",
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
   },
 });
 
-export default mongoose.model("Location", LocationSchema);
+export const GeoLocationSchema = new Schema({
+  name: String,
+  geoLocation: { type: PointSchema, index: "2dsphere" },
+});
+
+export default mongoose.model("Location", GeoLocationSchema);
