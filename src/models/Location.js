@@ -18,4 +18,4 @@ export const GeoLocationSchema = new Schema({
   geoLocation: { type: PointSchema, index: "2dsphere" },
 });
 
-export default mongoose.model("Location", GeoLocationSchema);
+export default mongoose.model("GeoLocation", GeoLocationSchema);
