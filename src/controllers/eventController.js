@@ -7,6 +7,7 @@ export const createEvent = asyncHandler(async (req, res, next) => {
   try {
     const {
       name,
+      creator,
       category,
       dateScheduled,
       description,
@@ -16,13 +17,14 @@ export const createEvent = asyncHandler(async (req, res, next) => {
     } = req.body;
 
     console.log(req.body);
-    if (!name || !dateScheduled || !accessability || !location) {
+    if (!name || !dateScheduled || !accessability || !location || !creator) {
       res.status(400);
       throw new Error("Please add all necessary fields");
     }
 
     const event = await Event.create({
       name,
+      creator,
       category,
       dateScheduled: new Date(dateScheduled),
       description,
@@ -73,6 +75,37 @@ export const findEvent = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
+
+export const updateEvent = asyncHandler(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const event = req.body;
+    console.log(id, event);
+
+    console.log(await Event.findById(id));
+
+    console.log(res.locals.user.id);
+    const updatedEvent = await Event.findOneAndUpdate(
+      { $and: [{ _id: id }, { creator: res.locals.user.id }] },
+      event,
+      {
+        new: true,
+      }
+    );
+
+    if (updatedEvent)
+      res
+        .status(200)
+        .json({ message: "Event updated successfully", updatedEvent });
+    else {
+      throw new Error("Can't update Event");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+export const interactWithEvent = asyncHandler(async (req, res, next) => {});
 
 export const deleteEvent = asyncHandler(async (req, res, next) => {
   try {
