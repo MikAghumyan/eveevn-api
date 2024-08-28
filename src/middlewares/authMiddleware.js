@@ -13,13 +13,14 @@ export default asyncHandler(async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId).select("password");
+    const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
       res.status(401);
       throw new Error("Invalid UserId");
     }
 
+    res.locals.user = user;
     next();
   } catch (error) {
     console.log(error);
