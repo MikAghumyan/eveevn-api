@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 
 import Event from "./../models/Event.js";
+import { filterEvents } from "../services/eventService.js";
 
 export const createEvent = asyncHandler(async (req, res, next) => {
   try {
@@ -46,25 +47,13 @@ export const createEvent = asyncHandler(async (req, res, next) => {
 
 export const findEvents = asyncHandler(async (req, res, next) => {
   try {
-    let filter = { "location.geoLocation": { $exists: true } };
+    const events = await Event.find(filterEvents(req.query));
 
-    const { latitude, longitude, distance } = req.query;
-
-    if (latitude && longitude) {
-      console.log(longitude, latitude);
-      filter["location.geoLocation"] = {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [longitude, latitude],
-          },
-          $maxDistance: distance || 100000,
-        },
-      };
+    if (events) res.status(200).json(events);
+    else {
+      res.status(400);
+      throw new Error("Invalid Queries");
     }
-    const events = await Event.find(filter).exec();
-
-    res.status(200).json({ events, filter });
   } catch (error) {
     next(error);
   }
