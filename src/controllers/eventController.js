@@ -6,6 +6,7 @@ export const createEvent = asyncHandler(async (req, res, next) => {
   try {
     const {
       name,
+      category,
       dateScheduled,
       description,
       accessability,
@@ -21,6 +22,7 @@ export const createEvent = asyncHandler(async (req, res, next) => {
 
     const event = await Event.create({
       name,
+      category,
       dateScheduled: new Date(dateScheduled),
       description,
       accessability,

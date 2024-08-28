@@ -5,6 +5,8 @@ dotenv.config();
 
 import EventRoutes from "./routes/EventRoutes.js";
 import AuthRoutes from "./routes/AuthRoutes.js";
+import CategoryRoutes from "./routes/CategoryRoutes.js";
+
 import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 const app = express();
@@ -25,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/events", EventRoutes);
 app.use("/api/auth", AuthRoutes);
+app.use("/api/category", CategoryRoutes);
 
 app.use(errorMiddleware);
 
