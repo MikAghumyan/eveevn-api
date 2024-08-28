@@ -5,6 +5,7 @@ import GeoLocation, { GeoLocationSchema } from "./Location.js";
 const EventSchema = new Schema({
   name: { type: String, required: true },
   creator: { type: Schema.Types.ObjectId, ref: "User" },
+  category: { type: Schema.Types.ObjectId, ref: "Category" },
   dateCreated: { type: Date, default: new Date() },
   dateScheduled: { type: Date, required: true },
   description: String,
