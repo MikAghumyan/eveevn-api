@@ -58,3 +58,36 @@ export const findEvents = asyncHandler(async (req, res, next) => {
     next(error);
   }
 });
+
+export const findEvent = asyncHandler(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+
+    if (event) res.status(200).json(event);
+    else {
+      res.status(400);
+      throw new Error("Invalid event");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+export const deleteEvent = asyncHandler(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findByIdAndDelete(id);
+
+    if (event)
+      res
+        .status(200)
+        .json({ message: "Event deleted successfully", id: event.id });
+    else {
+      res.status(400);
+      throw new Error("Invalid event");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
