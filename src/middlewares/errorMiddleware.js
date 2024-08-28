@@ -1,5 +1,5 @@
 export default (err, req, res, next) => {
-  const errCode = res.statusCode || 500;
+  const errCode = res.statusCode >= 400 ? res.statusCode : 500;
 
   res.status(errCode);
   console.log("errMiddleware", errCode);
