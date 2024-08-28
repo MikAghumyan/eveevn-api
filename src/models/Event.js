@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-import { GeoLocationSchema } from "./Location.js";
+import GeoLocation, { GeoLocationSchema } from "./Location.js";
 
 const EventSchema = new Schema({
   name: { type: String, required: true },
