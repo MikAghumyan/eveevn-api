@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 
 import Event from "./../models/Event.js";
 import { filterEvents } from "../services/eventService.js";
+import User from "../models/User.js";
 
 export const createEvent = asyncHandler(async (req, res, next) => {
   try {
@@ -105,7 +106,48 @@ export const updateEvent = asyncHandler(async (req, res, next) => {
   }
 });
 
-export const interactWithEvent = asyncHandler(async (req, res, next) => {});
+export const interactWithEvent = asyncHandler(async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { key } = req.body;
+    const user = res.locals.user;
+    console.log(user);
+
+    const event = await Event.findById(id);
+    console.log(event);
+
+    switch (key) {
+      case "interested":
+        const isInterested = user.interestedEvents.some((value) => {
+          return value.equals(event._id);
+        });
+
+        const update = {
+          [isInterested ? "$pull" : "$push"]: { interestedEvents: id },
+        };
+
+        const updatedUser = await User.findByIdAndUpdate(user.id, update, {
+          new: true,
+        });
+
+        event.interested += isInterested ? -1 : 1;
+        await event.save();
+
+        res.status(200).json({
+          message: `${
+            isInterested ? "Removed from" : "Added to"
+          } Interested successfully`,
+          event,
+          updatedUser,
+        });
+
+        break;
+
+      default:
+        break;
+    }
+  } catch (error) {}
+});
 
 export const deleteEvent = asyncHandler(async (req, res, next) => {
   try {
