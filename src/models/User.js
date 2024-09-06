@@ -5,14 +5,14 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   displayName: { type: String, required: true },
   interestedEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
-  subscribedEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+  goingEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
   interestedCountByCategory: [
     {
       category: { type: Schema.Types.ObjectId, ref: "Category" },
       count: { type: Number, default: 1 },
     },
   ],
-  subscribedCountByCategory: [
+  goingCountByCategory: [
     {
       category: { type: Schema.Types.ObjectId, ref: "Category" },
       count: { type: Number, default: 1 },
