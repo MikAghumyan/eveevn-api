@@ -5,7 +5,14 @@ import User from "../models/User.js";
 
 export default asyncHandler(async (req, res, next) => {
   try {
-    const token = req.header("Authorization").split(" ")[1];
+    const bearertoken = req.header("Authorization");
+
+    if (!bearertoken) {
+      res.status(401);
+      throw new Error("Access denied");
+    }
+
+    const token = bearertoken.split(" ")[1];
 
     if (!token) {
       res.status(401);
@@ -23,6 +30,6 @@ export default asyncHandler(async (req, res, next) => {
     res.locals.user = user;
     next();
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
